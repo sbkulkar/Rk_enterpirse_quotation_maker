@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>R.K. Enterprises — Quotation Maker</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- MOBILE TAB BAR -->
+  <div id="mob-tabs">
+    <button class="mob-tab active" onclick="mobSwitch('form')">&#9998; Fill Details</button>
+    <button class="mob-tab" onclick="mobSwitch('preview')">&#128196; Preview</button>
+  </div>
+
+  <!-- ════════ FORM PANEL ════════ -->
+  <div id="form-panel" class="mob-active">
+    <div class="form-header">
+      <div class="form-header-left">&#129534; Quotation Maker</div>
+    </div>
+    <div class="form-body">
+
+      <!-- SELLER -->
+      <div class="section">
+        <div class="sec-title">Seller Details</div>
+        <div class="field"><label>Company Name</label>
+          <input id="s-name" value="R.K. ENERPRISES." oninput="autoRefresh()" /></div>
+        <div class="field"><label>Address</label>
+          <textarea id="s-addr" oninput="autoRefresh()">753/54, Budhwar Peth, 505, Panacea Light, Pune</textarea></div>
+        <div class="row2">
+          <div class="field"><label>PAN</label><input id="s-pan" value="AAFFR1555A" oninput="autoRefresh()" /></div>
+          <div class="field"><label>GSTIN</label><input id="s-gst" value="27AAFFR1555A1ZK" oninput="autoRefresh()" /></div>
+        </div>
+        <div class="row2">
+          <div class="field"><label>Phone</label><input id="s-phone" value="8087769711/9890756204" oninput="autoRefresh()" /></div>
+          <div class="field"><label>Email</label><input id="s-email" value="rkenterprises08@yahoo.com" oninput="autoRefresh()" /></div>
+        </div>
+        <div class="field">
+          <label>Company Logo <span style="color:#888;font-weight:400;">(top-right on quotation)</span></label>
+          <div class="logo-area">
+            <div class="logo-preview-box" id="logo-preview-box"><span>No logo</span></div>
+            <div class="logo-btns">
+              <button class="btn btn-primary" onclick="document.getElementById('logo-file').click()">&#128247; Upload Logo</button>
+              <input type="file" id="logo-file" accept="image/*" style="display:none" onchange="handleLogo(event)" />
+              <button class="btn btn-danger" onclick="removeLogo()">&#10005; Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUOTATION INFO -->
+      <div class="section">
+        <div class="sec-title">Quotation Info</div>
+        <div class="row2">
+          <div class="field"><label>Quotation No.</label><input id="q-no" value="RK/2026-27/117" oninput="autoRefresh()" /></div>
+          <div class="field"><label>Date</label><input id="q-date" type="date" onchange="autoRefresh()" /></div>
+        </div>
+        <div class="field"><label>Subject / For</label>
+          <input id="q-subj" value="ESD TWEEZER &amp; 16 PIN WIRE" oninput="autoRefresh()" /></div>
+      </div>
+
+      <!-- BUYER -->
+      <!-- BUYER -->
+<div class="section">
+  <div class="sec-title">Party (Buyer) Details</div>
+  <div class="field"><label>Company Name</label>
+    <input id="b-name" value="Schaeffler Technology Solutions India"
+      oninput="autoFillGSTIN(this.value); autoRefresh()" />
+    <div id="gstin-hint" style="font-size:10px; margin-top:3px; min-height:14px;"></div>
+  </div>
+  <div class="field"><label>Address</label>
+    <textarea id="b-addr" oninput="autoRefresh()">Private Ltd. M-Agile, 8 Th Floor,
+Sr. No 33 Pancard Club Road, Baner
+Pune, Maharashtra 411045</textarea></div>
+  <div class="field"><label>GSTIN / UIN</label>
+    <input id="b-gst" value="27ABICS9269F1ZR" oninput="autoRefresh()" /></div>
+</div>
+      <!-- LINE ITEMS -->
+      <div class="section">
+        <div class="sec-title">Line Items <span style="font-size:10px;color:#888;font-weight:400;text-transform:none;">(each item has its own GST %)</span></div>
+        <div class="items-wrap">
+          <table class="fi">
+            <thead>
+              <tr>
+                <th style="width:27%">Description</th>
+                <th style="width:13%">HSN/SAC</th>
+                <th style="width:7%">Qty</th>
+                <th style="width:8%">Unit</th>
+                <th style="width:13%">Price</th>
+                <th style="width:10%">GST%</th>
+                <th style="width:14%">Amount</th>
+                <th style="width:5%"></th>
+              </tr>
+            </thead>
+            <tbody id="items-body"></tbody>
+          </table>
+        </div>
+        <div class="gst-hint">GST per item: <span>0%</span><span>5%</span><span>12%</span><span>18%</span><span>28%</span></div>
+        <button class="btn-add" onclick="addItem()">+ Add Line Item</button>
+      </div>
+
+      <!-- TRANSPORT -->
+      <div class="section">
+        <div class="sec-title">Transport &amp; Charges</div>
+        <div class="row2">
+          <div class="field"><label>Transport Charges (Rs.)</label>
+            <input id="transport" type="number" value="200" min="0" step="0.01" oninput="autoRefresh()" /></div>
+          <div class="field"><label>Transport GST %</label>
+            <select id="transport-gst" onchange="autoRefresh()">
+              <option value="0">0%</option><option value="5">5%</option>
+              <option value="12">12%</option><option value="18" selected>18%</option><option value="28">28%</option>
+            </select>
+          </div>
+        </div>
+        <div class="field"><label>Authorised Signatory Text</label>
+          <input id="signatory" value="for R.K. ENERPRISES." oninput="autoRefresh()" /></div>
+      </div>
+
+      <!-- DIGITAL SIGNATURE -->
+      <div class="section">
+        <div class="sec-title">Digital Signature</div>
+        <div class="sig-tabs">
+          <button class="sig-tab active" id="tab-draw" onclick="switchSigTab('draw')">&#9998; Draw</button>
+          <button class="sig-tab" id="tab-upload" onclick="switchSigTab('upload')">&#128247; Upload Image</button>
+        </div>
+        <div class="sig-panel active" id="panel-draw">
+          <div style="font-size:11px;color:#666;margin-bottom:5px;">Draw your signature with mouse or finger:</div>
+          <canvas id="sig-canvas" width="400" height="120"></canvas>
+          <div class="sig-draw-actions">
+            <button class="btn btn-primary" onclick="applyDrawnSig()">&#10003; Use This Signature</button>
+            <button class="btn" onclick="clearCanvas()">&#8634; Clear</button>
+          </div>
+          <div id="draw-status" style="font-size:11px;color:#27ae60;margin-top:5px;"></div>
+        </div>
+        <div class="sig-panel" id="panel-upload">
+          <div style="font-size:11px;color:#666;margin-bottom:5px;">Upload a scanned image of the signature:</div>
+          <div class="sig-upload-preview" id="sig-upload-preview"><span>No signature uploaded</span></div>
+          <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="document.getElementById('sig-file').click()">&#128247; Upload Image</button>
+            <button class="btn btn-danger" onclick="removeSig()">&#10005; Remove</button>
+          </div>
+          <input type="file" id="sig-file" accept="image/*" style="display:none" onchange="handleSigUpload(event)" />
+        </div>
+      </div>
+
+    </div>
+    <div class="form-actions">
+      <button class="btn-gen" onclick="genAndSwitch()">&#10227; Generate &amp; Preview Quotation</button>
+    </div>
+  </div>
+
+  <!-- ════════ PREVIEW PANEL ════════ -->
+  <div id="preview-panel">
+    <div id="toolbar">
+      <button class="tbtn p" onclick="dlHTML()">&#8595; Download App</button>
+      <button class="tbtn" onclick="doPrint()">&#128424; Print / PDF</button>
+      <button class="tbtn" onclick="renderPreview()">&#10227; Refresh</button>
+    </div>
+    <div id="q-wrap"><div id="q-sheet"></div></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
